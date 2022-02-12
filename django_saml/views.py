@@ -43,6 +43,8 @@ def login(request):
         redirect_to = OneLogin_Saml2_Utils.get_self_url(req) + settings.SAML_LOGIN_REDIRECT
     url = saml_auth.login(redirect_to)
     request.session['AuthNRequestID'] = saml_auth.get_last_request_id()
+    print("------------------------------------------------------------------")
+    print(request.session['AuthNRequestID'])
     return HttpResponseRedirect(url)
 
 
