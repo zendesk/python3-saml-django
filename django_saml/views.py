@@ -8,6 +8,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
+from pprint import pprint
+
 
 logger = logging.getLogger('django_saml')
 
@@ -123,7 +125,7 @@ def saml_acs(request):
             request.session['samlNameIdSPNameQualifier'] = saml_auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = saml_auth.get_session_index()
             print("--------------------------django_saml@saml_acs--session")
-            print(request.session)
+            pprint(vars(request.session))
             print("--------------------------django_saml@saml_acs--sessionend")
             if 'RelayState' in req['post_data'] \
                     and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
