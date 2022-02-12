@@ -128,7 +128,7 @@ def saml_acs(request):
             pprint(vars(request.session))
             print("--------------------------django_saml@saml_acs--sessionend")
 
-            if settings.is_defined('SAML_LOGIN_REDIRECT'):
+            if hasattr(settings, 'SAML_LOGIN_REDIRECT'):
                 return HttpResponseRedirect(settings.SAML_LOGIN_REDIRECT)
             elif 'RelayState' in req['post_data'] \
                     and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
