@@ -16,8 +16,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/penn-state-dance-marathon/python3-saml-django",
     packages=['django_saml'],
-    # install_requires=['python3-saml'],
-    install_requires=['python3-saml @ git+https://github.com/zendesk/python-saml.git@ext#egg=python3-saml'],
+    install_requires=['python3-saml'],
+    # install_requires=['python3-saml @ git+https://github.com/zendesk/python-saml.git@ext#egg=python3-saml'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

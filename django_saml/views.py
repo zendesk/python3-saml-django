@@ -35,6 +35,7 @@ def prepare_django_request(request):
 @never_cache
 def login(request):
     """Kick off a SAML login request."""
+    print("------------------------------------------------------------------")
     req = prepare_django_request(request)
     saml_auth = OneLogin_Saml2_Auth(req, old_settings=settings.ONELOGIN_SAML_SETTINGS)
     if 'next' in request.GET:
@@ -96,6 +97,7 @@ def saml_sls(request):
 @never_cache
 @csrf_exempt
 def saml_acs(request):
+    print("--------------------------django_saml@saml_acs")
     """Handle an AuthenticationResponse from the IdP."""
     if request.method != 'POST':
         return HttpResponse('Method not allowed.', status=405)
@@ -120,6 +122,9 @@ def saml_acs(request):
             request.session['samlNameIdNameQualifier'] = saml_auth.get_nameid_nq()
             request.session['samlNameIdSPNameQualifier'] = saml_auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = saml_auth.get_session_index()
+            print("--------------------------django_saml@saml_acs--session")
+            print(request.session)
+            print("--------------------------django_saml@saml_acs--sessionend")
             if 'RelayState' in req['post_data'] \
                     and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
                 url = saml_auth.redirect_to(req['post_data']['RelayState'])
