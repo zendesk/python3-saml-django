@@ -127,12 +127,13 @@ def saml_acs(request):
             print("--------------------------django_saml@saml_acs--session")
             pprint(vars(request.session))
             print("--------------------------django_saml@saml_acs--sessionend")
-            if 'RelayState' in req['post_data'] \
+
+            if settings.is_defined('SAML_LOGIN_REDIRECT'):
+                return HttpResponseRedirect(settings.SAML_LOGIN_REDIRECT)
+            elif 'RelayState' in req['post_data'] \
                     and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
                 url = saml_auth.redirect_to(req['post_data']['RelayState'])
                 return HttpResponseRedirect(url)
-            else:
-                return HttpResponseRedirect(settings.SAML_LOGIN_REDIRECT)
         logger.exception(saml_auth.get_last_error_reason())
         return HttpResponse(content="Invalid Response", status=400)
     except PermissionDenied:
